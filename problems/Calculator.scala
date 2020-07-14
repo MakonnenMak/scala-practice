@@ -33,22 +33,41 @@ object runner extends App {
                     Success(numeratorResult / denominatorResult)
               }
           }
+        case SquareRoot(n) =>
+          n.eval match {
+            case Failure(reason) => Failure(reason)
+            case Success(n) =>
+              if (n < 0)
+                Failure("Can't square root a negative")
+              else
+                Success(math.sqrt(n));
+          }
       }
   }
-
+  // Data type for various operations
   final case class Addition(left: Expression, right: Expression)
       extends Expression;
   final case class Division(numerator: Expression, denominator: Expression)
       extends Expression;
+  final case class SquareRoot(value: Expression) extends Expression;
   final case class Number(value: Double) extends Expression;
+
+  // Tests
   val ten = Number(10);
   val five = Number(5);
   val zero = Number(0);
+  val negativeNum = Number(-5)
   val myAdd = Addition(ten, five);
   val myDivideSuccess = Division(ten, five);
   val myDivideFailure = Division(ten, zero);
-  println(myAdd.eval)
-  println(myDivideSuccess.eval)
-  println(myDivideFailure.eval)
+  val mySquareRootSuccess = SquareRoot(ten);
+  val mySquareRootFailure = SquareRoot(negativeNum);
+
+  // Output
+  println("10+5 ", myAdd.eval)
+  println("10/5 ", myDivideSuccess.eval)
+  println("10/0 ", myDivideFailure.eval)
+  println("Sqrt(10) ", mySquareRootSuccess.eval)
+  println("Sqrt(-5) ", mySquareRootFailure.eval)
 
 }
