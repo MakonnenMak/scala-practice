@@ -1,8 +1,6 @@
 object runner extends App {
   // Design algebraic data-type for JSON
 
-  // JSON Values Data
-  sealed trait JSON;
   final case class JsNumber(value: Double) extends JSON;
   final case class JsString(value: String) extends JSON;
   final case class JsBoolean(value: Boolean) extends JSON;
