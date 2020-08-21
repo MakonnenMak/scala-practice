@@ -45,4 +45,7 @@ object Runner extends App {
     )
   )
 
+  // 5.5.4.4
+  // Implement map and flatmap for sum type
+
 }
