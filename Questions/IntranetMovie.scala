@@ -37,9 +37,20 @@ def numberOfFilms(N:Int,directors:Seq[Director]):Seq[Director] =
   directors.filter(_.films.length>=N)
 
 // Directors born before some year, Y
-//
+def beforeYearY(Y:Int,directors:Seq[Director]):Seq[Director] =
+  directors.filter(_.yearOfBirth < Y)
 // Accept two parameters,year and number Of Films, and return a listof directors who were born before year who have also directed more than than number Of Films
-//
+def helper(Y:Int, N:Int,directors:Seq[Director]): Seq[Director] =
+  // Filter each section of query separately then find the intersection
+  val byAge = directors.filter(_ .yearOfBirth < Y)
+  val byFilm = directors.filter(_.films.length>=N)
+  byFilm.filter(byAge.contains)
+
 // Accept a parameter 'ascending' of type Boolean that defaults to true. Sort the directors by age in the specified order
+def ageOrder(ascending:Boolean = true,directors) = 
+  if(ascending)
+    directors.sortWith((a,b) => a.yearOfBirth < b.yearOfBirth)
+  else
+    directors.sortWith((a,b) => a.yearOfBirth  > b.yearOfBirth)
 
 
