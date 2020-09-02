@@ -40,17 +40,21 @@ def numberOfFilms(N:Int,directors:Seq[Director]):Seq[Director] =
 def beforeYearY(Y:Int,directors:Seq[Director]):Seq[Director] =
   directors.filter(_.yearOfBirth < Y)
 // Accept two parameters,year and number Of Films, and return a listof directors who were born before year who have also directed more than than number Of Films
-def helper(Y:Int, N:Int,directors:Seq[Director]): Seq[Director] =
+def helper(Y:Int, N:Int,directors:Seq[Director]): Seq[Director] ={
   // Filter each section of query separately then find the intersection
   val byAge = directors.filter(_ .yearOfBirth < Y)
   val byFilm = directors.filter(_.films.length>=N)
   byFilm.filter(byAge.contains)
+}
 
 // Accept a parameter 'ascending' of type Boolean that defaults to true. Sort the directors by age in the specified order
-def ageOrder(ascending:Boolean = true,directors) = 
+def ageOrder(ascending:Boolean = true,directors:Seq[Director]): Seq[Director] = {
   if(ascending)
     directors.sortWith((a,b) => a.yearOfBirth < b.yearOfBirth)
   else
     directors.sortWith((a,b) => a.yearOfBirth  > b.yearOfBirth)
-
-
+} 
+val nolanFilms = nolan.films.map((film)=>film.name)
+val allFilmNames = directors.flatMap((director=>director.films.map(film => film.name)))
+val earliestMctFilm = mcTiernan.films.map(film => film.yearOfRelease).fold(Int.MaxValue)((f1,f2)=>math.min(f1,f2))
+//Another option  mcTiernan.films.sortWith((a,b) => a.yearOfRelease < b.yearOfRelease).headOption
