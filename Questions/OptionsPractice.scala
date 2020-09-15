@@ -11,13 +11,13 @@ object runner extends App {
       B.map { b => (a + b) }
     }
 
-  // Adding All of the things
-  def addOptions(A: Option[Int], B: Option[Int], C: Option[Int]): Option[Int] =
+  def addOptions(A: Option[Int], B: Option[Int], C: Option[Int]) =
     for {
       a <- A
       b <- B
       c <- C
     } yield a + b + c
+
   // Fold version
   def addOptions2(A: Option[Int], B: Option[Int], C: Option[Int]): Option[Int] =
     A.flatMap { a =>
@@ -31,6 +31,15 @@ object runner extends App {
         }
       )
     }
+
+  def notZero(someNum: Int) = if (someNum != 0) Option(someNum) else None
   // Division exercise
+  def divide(num: Option[Int], denom: Option[Int]): Option[Int] =
+    for {
+      n <- num
+      d <- denom
+    } yield n / d
+
+  println(divide(Option(4), notZero(0)))
 
 }
